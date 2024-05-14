@@ -1,6 +1,7 @@
 import axios from "axios";
 import dayjs from "dayjs";
 import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import CustomTable from "../components/CustomTable";
 
 function Home() {
@@ -44,20 +45,25 @@ function Home() {
   // add a task
   const handleAdd = () => {
     const url = "http://localhost:5000/task/";
-    axios
-      .post(url, formData)
-      .then((response) => {
-        console.log(response);
-        getData();
-        setFormData({
-          title: "",
-          description: "",
-          status: "inactive",
+
+    if (formData.title === "") {
+      toast.error("Title is required")
+    } else {
+      axios
+        .post(url, formData)
+        .then((response) => {
+          toast.success("Title is added successfully")
+          getData();
+          setFormData({
+            title: "",
+            description: "",
+            status: "inactive",
+          });
+        })
+        .catch((error) => {
+          console.log(error);
         });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    }
   };
 
   // add multiple task
@@ -92,6 +98,7 @@ function Home() {
       .then((response) => {
         console.log(response);
         getData();
+        toast.success(response.data.message)
         setFormData({ title: "", description: "", status: "inactive" });
       })
       .catch((error) => {
