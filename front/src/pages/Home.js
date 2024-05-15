@@ -47,12 +47,12 @@ function Home() {
     const url = "http://localhost:5000/task/";
 
     if (formData.title === "") {
-      toast.error("Title is required")
+      toast.error("Title is required");
     } else {
       axios
         .post(url, formData)
         .then((response) => {
-          toast.success("Title is added successfully")
+          toast.success("Title is added successfully");
           getData();
           setFormData({
             title: "",
@@ -75,9 +75,11 @@ function Home() {
       .then((response) => {
         console.log(response);
         getData();
+        toast.success("All Task Added Successfully");
       })
       .catch((error) => {
         console.log(error);
+        toast.warn("There was a error check broser console for error");
       });
   };
 
@@ -98,7 +100,7 @@ function Home() {
       .then((response) => {
         console.log(response);
         getData();
-        toast.success(response.data.message)
+        toast.success(response.data.message);
         setFormData({ title: "", description: "", status: "inactive" });
       })
       .catch((error) => {
@@ -154,6 +156,7 @@ function Home() {
             );
         }
       },
+      filterVariant: "select",
     },
     {
       accessorKey: "date",
@@ -364,7 +367,7 @@ function Home() {
           {!isMultiInput ? "Multitple Input" : "Single Input"}
         </label>
       </div>
-      <CustomTable data={data} columns={columns} />
+      <CustomTable data={data} columns={columns} enableSorting />
     </div>
   );
 }
