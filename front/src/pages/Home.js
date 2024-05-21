@@ -1,8 +1,8 @@
-import axios from "axios";
 import dayjs from "dayjs";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import CustomTable from "../components/CustomTable";
+import axios from "../api/axios";
 
 function Home() {
   const [isMultiInput, setIsmultiInput] = useState(false);
@@ -23,7 +23,7 @@ function Home() {
   const [data, setData] = useState([]);
 
   const getData = () => {
-    axios("http://localhost:5000/task/")
+    axios("/task/")
       .then((response) => {
         setData(response?.data?.result);
       })
@@ -69,7 +69,7 @@ function Home() {
   // add multiple task
   const handleMultiAdd = () => {
     console.log(formDatas);
-    const url = "http://localhost:5000/task/all";
+    const url = "task/all";
     axios
       .post(url, formDatas)
       .then((response) => {
@@ -89,7 +89,7 @@ function Home() {
 
   // edit a task
   const handleUpdate = () => {
-    const url = `http://localhost:5000/task/${formData._id}`;
+    const url = `/task/${formData._id}`;
     axios
       .put(url, {
         title: formData?.title,
@@ -110,7 +110,7 @@ function Home() {
 
   // delete a task
   const handleDel = (id) => {
-    const url = `http://localhost:5000/task/${id}`;
+    const url = `/task/${id}`;
     axios
       .delete(url)
       .then((response) => {
